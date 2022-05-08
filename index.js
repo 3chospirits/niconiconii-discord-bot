@@ -1,21 +1,17 @@
-import Discord, { Intents } from "discord.js"
+import { Intents } from "discord.js"
 import dotenv from "dotenv"
+import Bot from "./classes/Bot.js"
 
 dotenv.config()
 
 const TOKEN = process.env.TOKEN
 
-const client = new Discord.Client({
+const client = new Bot({
 	intents: [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS],
+	prefix: ".",
 })
 
-client.on("ready", () => {
-	console.log(`Logged in as ${client.user.tag}!`)
-})
+client.loadEvents()
+client.loadCommands()
 
-client.on("messageCreate", (message) => {
-	if (message.content === "hello") 
-        message.reply("Hello World!")
-})
-
-client.login(TOKEN)
+client.start(TOKEN)
