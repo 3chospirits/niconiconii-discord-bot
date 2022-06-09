@@ -1,10 +1,6 @@
 import { Intents } from "discord.js"
-import dotenv from "dotenv"
+import "dotenv/config"
 import Bot from "./classes/Bot.js"
-
-dotenv.config()
-
-const TOKEN = process.env.TOKEN
 
 const client = new Bot({
 	intents: [Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILDS],
@@ -14,4 +10,4 @@ const client = new Bot({
 client.loadEvents()
 client.loadCommands()
 
-client.start(TOKEN)
+client.start(process.env.TOKEN)

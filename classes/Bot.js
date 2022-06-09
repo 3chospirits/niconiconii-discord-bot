@@ -27,7 +27,7 @@ class Bot extends Client {
 			const eventName = eventFileName.split(".js")[0]
 			const Event = (await import(`${(this, __dirname)}/../events/${eventFileName}`)).default
 			const event = new Event(this, eventName)
-			event.listen()
+			event.startListener()
 			this.events.set(eventName, event)
 		})
 	}

@@ -13,11 +13,11 @@ class Event {
 		}
 	}
 
-	listen() {
+	startListener() {
 		this.client.on(this.name, this._listener)
 	}
 
-	removeListener() {
+	stopListener() {
 		this.client.off(this.name, this._listener)
 	}
 }
