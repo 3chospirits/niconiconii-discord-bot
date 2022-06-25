@@ -15,6 +15,8 @@ class Bot extends Client {
 
 		this.prefix = args.prefix
 		this.commands = new Collection()
+		this.aliases = new Collection()
+		this.cooldowns = new Collection()
 		this.events = new Collection()
 	}
 
@@ -38,11 +40,16 @@ class Bot extends Client {
 			const Command = (await import(`${(this, __dirname)}/../commands/${commandFileName}`)).default
 			const command = new Command(this, commandName)
 			this.commands.set(commandName, command)
+			if (command.aliases) 
+				command.aliases.forEach((alias) => this.aliases.set(alias, commandName))
 		})
 	}
 
 	getCommand(commandName) {
-		return this.commands.get(commandName)
+		let command = this.commands.get(commandName)
+		if (!command)
+			command = this.commands.get(this.aliases.get(commandName))
+		return command
 	}
 }
 
